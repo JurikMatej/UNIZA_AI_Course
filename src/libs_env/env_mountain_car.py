@@ -30,6 +30,8 @@ class EnvMountainCar(libs_env.env.Env):
         self.position_min = -1.2
         self.position_max =  0.6001
 
+        self.move_old = 0
+        self.move_to_top = 0
 
         self.reset()
 
@@ -44,7 +46,7 @@ class EnvMountainCar(libs_env.env.Env):
         self.__update_observation()
 
     def _print(self):
-        print("move=", self.get_move(), "  score=", self.get_score(), "  normalised score=", self.get_normalised_score())
+        print("move=", self.get_move(), "  score=", self.get_score(), "  normalised score=", self.get_normalised_score(), " moves to top = ", self.move_to_top)
         self.render()
 
     def render(self):
@@ -89,13 +91,6 @@ class EnvMountainCar(libs_env.env.Env):
 
     def do_action(self, action):
 
-        '''
-        if self.velocity > 0.0:
-            acc = 1.0
-        else:
-            acc = -1.0
-        '''
-
         if action == 0:
             acc = -1.0
         elif action == 1:
@@ -121,13 +116,19 @@ class EnvMountainCar(libs_env.env.Env):
             self.reward = 1.0
             self.set_terminal_state()
             self.reset()
+
+            self.move_to_top = self.move - self.move_old
+            self.move_old = self.move
         else:
             self.set_no_terminal_state()
-            self.reward = 0.0
+            self.reward = -0.002
 
         self.__update_observation()
 
         self.next_move()
+
+    def get_move_to_top(self):
+        return self.move_to_top
 
     def x_to_gui_x(self, x):
         return (x*1.0/self.width - 0.5)*2.0

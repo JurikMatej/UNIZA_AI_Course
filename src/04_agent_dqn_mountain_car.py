@@ -42,11 +42,11 @@ agent.run_best_enable()
 testing_iterations = 10000
 for iteration in range(0, testing_iterations):
     agent.main()
-    print("move=", env.get_move(), " score=",env.get_score())
+    print("move=", env.get_move(), " score=",env.get_score(), " moves to top = ", env.get_move_to_top())
 
 while True:
     agent.main()
     env.render()
 
 print("program done")
-print("move=", env.get_move(), " score=",env.get_score())
+print("move=", env.get_move(), " score=",env.get_score(), " moves to top = ", env.get_move_to_top())
