@@ -1,0 +1,72 @@
+{
+  "experience_buffer_size"        : 1024,
+  "gamma"               : 1.0,
+
+  "network_architecture":
+  {
+        "network_log_file_name" : "networks/settlers_network/network.log",
+
+        "input_geometry"     : [10, 10, 1],
+        "output_geometry"    : [1, 1, 6],
+
+        "hyperparameters" :
+        {
+          "init_weight_range" : 0.0,
+          "learning_rate"     : 0.0002,
+          "lambda1"           : 0.0000001,
+          "lambda2"           : 0.0000001,
+          "dropout"           : 0.02,
+
+          "minibatch_size"    : 32
+        },
+
+        "layers"         :
+        [
+
+            {
+              "type" : "dense convolution",
+              "geometry" : [3, 3, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+            {
+              "type" : "dense convolution",
+              "geometry" : [3, 3, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+            {
+              "type" : "dense convolution",
+              "geometry" : [3, 3, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+            {
+              "type" : "dense convolution",
+              "geometry" : [3, 3, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+            {
+              "type" : "convolution",
+              "geometry" : [1, 1, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+
+            {
+                "type"      : "dropout"
+            },
+
+            {
+                "type"      : "output"
+            }
+
+        ]
+  }
+}
