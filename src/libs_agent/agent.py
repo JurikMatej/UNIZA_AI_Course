@@ -15,7 +15,7 @@ class Agent():
 
     def main(self):
         #just choose random action, from interval <0, env.get_actions_count()>
-        action  = random.randint(0, self.env.get_actions_count())
+        action  = random.randint(0, self.env.get_actions_count()-1)
         self.env.do_action(action)
 
 

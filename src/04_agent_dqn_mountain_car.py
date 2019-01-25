@@ -20,6 +20,7 @@ env.print_info()
 
 agent = libs_agent.agent_dqn.DQNAgent(env, "networks/mountain_car/parameters.json", 0.1, 0.01)
 
+'''
 #process training
 training_iterations = 100000
 
@@ -30,6 +31,9 @@ for iteration in range(0, training_iterations):
         print(iteration*100.0/training_iterations, env.get_score())
 
 agent.save("networks/mountain_car/trained/")
+'''
+
+agent.load("networks/mountain_car/trained/")
 
 #reset score
 env.reset_score()

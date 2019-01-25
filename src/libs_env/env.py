@@ -74,5 +74,16 @@ class Env:
         print("state = ", self.get_observation())
         print()
 
+    def print_state(self):
+        idx = 0
+        for z in range(0, self.depth):
+            for y in range(0, self.height):
+                for x in range(0, self.width):
+                    print(self.observation[idx],end=" ")
+                    idx+= 1
+                print()
+            print()
+        print()
+
     def render(self):
         pass
