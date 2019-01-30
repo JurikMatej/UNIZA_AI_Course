@@ -17,7 +17,7 @@ env.print_info()
 #you can choose from pre-saved neteworks a, b, c
 agent = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.1, 0.01)
 
-'''
+
 #process training
 training_iterations = 100000
 
@@ -28,7 +28,7 @@ for iteration in range(0, training_iterations):
         print(iteration*100.0/training_iterations, env.get_score())
 
 agent.save("networks/pong_network_b/trained/")
-'''
+
 agent.load("networks/pong_network_b/trained/")
 
 
