@@ -12,11 +12,11 @@ env.print_info()
 
 
 #init DQN agent
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/warehouse_network/parameters.json", 0.3, 0.2) #0.2, 0.1
+agent = libs_agent.agent_dqn.DQNAgent(env, "networks/warehouse_network/parameters.json", 0.3, 0.1) #0.2, 0.1
 #agent = libs_agent.agent.Agent(env)
 
 #process training
-training_iterations = 100000
+training_iterations = 1000000
 
 for iteration in range(0, training_iterations):
     agent.main()

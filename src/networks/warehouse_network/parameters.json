@@ -1,6 +1,6 @@
 {
   "experience_buffer_size"        : 4096,
-  "gamma"               : 0.9,
+  "gamma"               : 1.0,
 
   "network_architecture":
   {
@@ -25,39 +25,33 @@
 
             {
               "type" : "dense convolution",
-              "geometry" : [3, 3, 16]
+              "geometry" : [3, 3, 8]
             },
             {
                 "type"      : "relu"
             },
             {
               "type" : "dense convolution",
-              "geometry" : [3, 3, 16]
+              "geometry" : [3, 3, 8]
             },
             {
                 "type"      : "relu"
             },
             {
               "type" : "dense convolution",
-              "geometry" : [3, 3, 16]
+              "geometry" : [3, 3, 8]
             },
             {
                 "type"      : "relu"
             },
             {
               "type" : "dense convolution",
-              "geometry" : [3, 3, 16]
+              "geometry" : [3, 3, 8]
             },
             {
                 "type"      : "relu"
             },
-            {
-              "type" : "convolution",
-              "geometry" : [1, 1, 16]
-            },
-            {
-                "type"      : "relu"
-            },
+
 
             {
                 "type"      : "dropout"

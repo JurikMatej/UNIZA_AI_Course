@@ -6,18 +6,33 @@ import libs_env.env
 import libs_gl_gui.gl_gui as gl_gui
 
 class Bot:
-    def __init__(self, position_x, position_y, max_x, max_y):
+
+    def __init__(self, max_x, max_y, type = 0, position_x = -1, position_y = -1):
         self.position_x = position_x
         self.position_y = position_y
         self.max_x      = max_x
         self.max_y      = max_y
+        self.type       = type
 
+        self.action     = 0
+
+        if self.position_x < 0 or self.position_y < 0:
+            self.random_position()
 
     def get_position_x(self):
         return self.position_x
 
     def get_position_y(self):
         return self.position_y
+
+    def get_position(self):
+        return [self.position_x, self.position_y]
+
+    def get_type(self):
+        return self.type
+
+    def get_action(self):
+        return self.action
 
     def random_position(self):
         self.position_x = random.randint(0, self.max_x)
@@ -44,8 +59,10 @@ class Bot:
         if self.position_y >= self.max_y:
             self.position_y = self.max_y
 
+        self.action = action
+
     def _print(self):
-        print(self.position_x, self.position_y, self.state)
+        print(self.position_x, self.position_y, self.type)
 
 
 
@@ -56,36 +73,39 @@ class EnvWarehouse(libs_env.env.Env):
         #init parent class -> environment interface
         libs_env.env.Env.__init__(self)
 
-        bots_count    = 1
-        sources_count = 10
+        self.bots_count  = 1
+        self.size        = 8
 
-        #dimensions 1x4x8
-        self.width  = 8
-        self.height = 8
-        self.depth  = 3
+        self.actions_count  = 4*self.bots_count
 
+        #dimensions
+        self.width  = self.size
+        self.height = self.size
+        self.depth  = self.bots_count + 1
 
-        self.target_x = self.width//2
-        self.target_y = self.height//2
-
-        #4 actions for movements
-        self.actions_count  = 4
-        self.active_bot     = 0
-
+        self.start_x = self.width//2
+        self.start_y = self.height//2
 
         #initial bots positions
         #create bots
-        self.bots = [ ]
-        for i in range(0, bots_count):
-            self.bots.append(Bot(self.target_x, self.target_y, self.width - 1, self.height - 1))
+        self.__spawn_bots(self.bots_count)
 
-        #create sources
-        self.sources = [ ]
-        for i in range(0, sources_count):
-            self.sources.append(Bot(0, 0, self.width - 1, self.height - 1))
-        for i in range(0, len(self.sources)):
-            self.sources[i].random_position()
 
+        self.reward_fields = []
+        #target fields
+        #negative rewards
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1, -1.0, 0, 0))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1, -1.0, self.width - 1, 0))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1, -1.0, 0, self.height - 1))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1, -1.0, self.width - 1, self.height - 1))
+
+        #positive rewards
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, 0, (self.height - 1)//2))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, self.width - 1, (self.height - 1)//2))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, (self.width - 1)//2, 0))
+        self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, (self.width - 1)//2, self.height - 1))
+
+        self.item = Bot(self.width - 1, self.height - 1, 0.0, self.start_x, self.start_y)
 
         #init state, as 1D vector (tensor with size depth*height*width)
         self.observation    = numpy.zeros(self.get_size())
@@ -93,7 +113,6 @@ class EnvWarehouse(libs_env.env.Env):
         self.__update_observation()
 
         self.gui = gl_gui.GLVisualisation()
-
 
 
     def _print(self):
@@ -123,77 +142,70 @@ class EnvWarehouse(libs_env.env.Env):
             y = self.bots[i].get_position_y()
 
             self.gui.translate(self.x_to_gui_x(x), self.y_to_gui_y(y), 0.001)
-
-            self.gui.set_color(1.0, 1.0, 1.0)
+            self.gui.set_color(0.9, 0.9, 0.0)
             self.gui.paint_square(element_size)
 
             self.gui.pop()
 
-        for i in range(0, len(self.sources)):
+        for i in range(0, len(self.reward_fields)):
             self.gui.push()
 
-            x = self.sources[i].get_position_x()
-            y = self.sources[i].get_position_y()
+            x = self.reward_fields[i].get_position_x()
+            y = self.reward_fields[i].get_position_y()
+            v = self.reward_fields[i].get_type()
+
+
 
             self.gui.translate(self.x_to_gui_x(x), self.y_to_gui_y(y), 0.0)
 
+            if v > 0.0:
+                self.gui.set_color(0.0, 0.9, 0.0)
+            elif v < 0.0:
+                self.gui.set_color(0.9, 0.0, 0.0)
+            else:
+                self.gui.set_color(0.0, 0.0, 0.9)
 
-            self.gui.set_color(0.0, 1.0, 0.0)
             self.gui.paint_square(element_size)
 
             self.gui.pop()
 
-        x = self.target_x
-        y = self.target_y
+            self.gui.push()
 
-        self.gui.push()
-        self.gui.set_color(1.0, 1.0, 0.0)
+        x = self.item.get_position_x()
+        y = self.item.get_position_y()
+
         self.gui.translate(self.x_to_gui_x(x), self.y_to_gui_y(y), 0.001)
+        self.gui.set_color(0.9, 0.9, 0.9)
         self.gui.paint_square(element_size)
+
         self.gui.pop()
 
-        print(self.move, self.score, self.reward)
-        self.print_state()
-
         self.gui.finish()
-        time.sleep(0.0005)
+        time.sleep(0.05)
 
 
 
 
 
     def do_action(self, action):
-        self.bots[self.active_bot].do_action(action)
 
-        self.reward = -0.01
+        bot_idx     = action//4
+        action_idx  = action%4
 
+        self.bots[bot_idx].do_action(action_idx)
+
+        if self.bots[bot_idx].get_position() == self.item.get_position():
+            bot_action = self.bots[bot_idx].get_action()
+            self.item.do_action(bot_action)
+
+        self.reward = -0.001
         self.set_no_terminal_state()
 
-        for i in range(0, len(self.sources)):
-            if self.bots[self.active_bot].get_position_x() == self.sources[i].get_position_x():
-                if self.bots[self.active_bot].get_position_y() == self.sources[i].get_position_y():
-                    self.sources[i].random_position()
-                    self.reward+= 1.0
-                    self.set_terminal_state()
-
-        '''
-        if self.bots[self.active_bot].get_state() == 0:
-            for i in range(0, len(self.sources)):
-                if self.sources[i].get_state() != 0:
-                    if self.bots[self.active_bot].get_position_x() == self.sources[i].get_position_x():
-                        if self.bots[self.active_bot].get_position_y() == self.sources[i].get_position_y():
-                            self.sources[i].set_state(0)
-                            self.bots[self.active_bot].set_state(1)
-                            self.reward+= 1.0
-
-
-        if self.bots[self.active_bot].get_position_x() == self.target_x:
-            if self.bots[self.active_bot].get_position_y() == self.target_y:
-                self.bots[self.active_bot].set_state(0)
-                self.reward = 1.0
+        for i in range(0, len(self.reward_fields)):
+            if self.item.get_position() == self.reward_fields[i].get_position():
+                self.reward = self.reward_fields[i].get_type()
                 self.set_terminal_state()
-        '''
-        self.active_bot = (self.active_bot+1)%len(self.bots)
+                self.reset()
 
         self.__update_observation()
         self.next_move()
@@ -201,36 +213,37 @@ class EnvWarehouse(libs_env.env.Env):
 
 
 
-    def __update_observation(self):
-        #clear state tensor, one only on agent position
-        self.observation.fill(0.0)
-
-
-        x = self.bots[self.active_bot].get_position_x()
-        y = self.bots[self.active_bot].get_position_y()
-        self.observation[self.__to_idx(x, y, 0)] = 1.0
-
-
-        for i in range(0,len(self.bots)):
-            x = self.bots[i].get_position_x()
-            y = self.bots[i].get_position_y()
-            self.observation[self.__to_idx(x, y, 1)] = 1.0
-
-
-        for i in range(0, len(self.sources)):
-            x = self.sources[i].get_position_x()
-            y = self.sources[i].get_position_y()
-            self.observation[self.__to_idx(x, y, 2)] = 1.0
-
-
-
-
-    def __to_idx(self, x, y, z):
-        return int((z*self.height + y)*self.width + x)
-
-
     def x_to_gui_x(self, x):
         return (x*1.0/self.width - 0.5)*2.0
 
     def y_to_gui_y(self, y):
         return (y*1.0/self.height - 0.5)*2.0
+
+    def reset(self):
+        self.item = Bot(self.width - 1, self.height - 1, 0.0, self.start_x, self.start_y)
+        self.__spawn_bots(self.bots_count)
+
+    def __update_observation(self):
+        #clear state tensor, one only on agent position
+        self.observation.fill(0.0)
+
+        self.observation[self.__to_idx(self.item.get_position_x(), self.item.get_position_y(), 0)] = 1.0
+        for i in range(0, len(self.bots)):
+            self.observation[self.__to_idx(self.bots[i].get_position_x(), self.bots[i].get_position_y(), i+1)] = 1.0
+
+        for i in range(0, len(self.observation)):
+            r = (random.random() - 0.5)*2.0*0.1
+            self.observation[i]+= r
+
+    def __to_idx(self, x, y, z):
+        return int((z*self.height + y)*self.width + x)
+
+    def __spawn_bots(self, bots_count):
+        self.bots = [ ]
+        for i in range(0, bots_count):
+            self.bots.append(Bot(self.width - 1, self.height - 1, 0))
+
+        for i in range(0, bots_count):
+            self.bots[i].random_position()
+            while (self.bots[i].get_position_x() == self.start_x) and (self.bots[i].get_position_y() == self.start_y):
+                self.bots[i].random_position()
