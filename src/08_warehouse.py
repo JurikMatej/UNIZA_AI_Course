@@ -25,7 +25,7 @@ for iteration in range(0, training_iterations):
         env._print()
         print(iteration*100.0/training_iterations, env.get_score())
 
-#agent.save("networks/warehouse_network/trained/")
+agent.save("networks/warehouse_network/trained/")
 
 #agent.load("networks/settlers_network/trained/")
 

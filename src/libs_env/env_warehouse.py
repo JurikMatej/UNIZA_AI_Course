@@ -74,7 +74,8 @@ class EnvWarehouse(libs_env.env.Env):
         libs_env.env.Env.__init__(self)
 
         self.bots_count  = 1
-        self.size        = 8
+        self.rewards_count     = 8
+        self.size        = 9
 
         self.actions_count  = 4*self.bots_count
 
@@ -90,7 +91,8 @@ class EnvWarehouse(libs_env.env.Env):
         #create bots
         self.__spawn_bots(self.bots_count)
 
-
+        self.__spawn_rewards(self.rewards_count)
+        '''
         self.reward_fields = []
         #target fields
         #negative rewards
@@ -104,6 +106,7 @@ class EnvWarehouse(libs_env.env.Env):
         self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, self.width - 1, (self.height - 1)//2))
         self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, (self.width - 1)//2, 0))
         self.reward_fields.append(Bot(self.width - 1, self.height - 1,  1.0, (self.width - 1)//2, self.height - 1))
+        '''
 
         self.item = Bot(self.width - 1, self.height - 1, 0.0, self.start_x, self.start_y)
 
@@ -181,7 +184,7 @@ class EnvWarehouse(libs_env.env.Env):
         self.gui.pop()
 
         self.gui.finish()
-        time.sleep(0.05)
+        time.sleep(0.1)
 
 
 
@@ -194,18 +197,27 @@ class EnvWarehouse(libs_env.env.Env):
 
         self.bots[bot_idx].do_action(action_idx)
 
+        self.reward = -0.01
+        self.set_no_terminal_state()
+
+        for i in range(0, len(self.reward_fields)):
+            if self.bots[bot_idx].get_position() == self.reward_fields[i].get_position():
+                self.reward = self.reward_fields[i].get_type()
+                self.set_terminal_state()
+                self.reset()
+
+        '''
         if self.bots[bot_idx].get_position() == self.item.get_position():
             bot_action = self.bots[bot_idx].get_action()
             self.item.do_action(bot_action)
-
-        self.reward = -0.001
-        self.set_no_terminal_state()
+            self.reward = 0.1
 
         for i in range(0, len(self.reward_fields)):
             if self.item.get_position() == self.reward_fields[i].get_position():
                 self.reward = self.reward_fields[i].get_type()
                 self.set_terminal_state()
                 self.reset()
+        '''
 
         self.__update_observation()
         self.next_move()
@@ -222,6 +234,7 @@ class EnvWarehouse(libs_env.env.Env):
     def reset(self):
         self.item = Bot(self.width - 1, self.height - 1, 0.0, self.start_x, self.start_y)
         self.__spawn_bots(self.bots_count)
+        self.__spawn_rewards(self.rewards_count)
 
     def __update_observation(self):
         #clear state tensor, one only on agent position
@@ -247,3 +260,15 @@ class EnvWarehouse(libs_env.env.Env):
             self.bots[i].random_position()
             while (self.bots[i].get_position_x() == self.start_x) and (self.bots[i].get_position_y() == self.start_y):
                 self.bots[i].random_position()
+
+    def __spawn_rewards(self, rewards_count):
+
+        self.reward_fields = []
+
+        for i in range(0, rewards_count):
+            if i%2 == 0:
+                reward = -1.0
+            else:
+                reward = 1.0
+
+            self.reward_fields.append(Bot(self.width - 1, self.height - 1, reward))
