@@ -5,7 +5,7 @@
 		"init_weight_range" : 0,
 		"lambda1" : 1.0000000116860974e-07,
 		"lambda2" : 1.0000000116860974e-07,
-		"learning_rate" : 0.00019999999494757503,
+		"learning_rate" : 0.00050000002374872565,
 		"minibatch_size" : 32
 	},
 	"input_geometry" : 
@@ -21,35 +21,35 @@
 			[
 				3,
 				3,
-				8
+				32
 			],
 			"input_geometry" : 
 			[
-				9,
-				9,
+				7,
+				7,
 				2
 			],
 			"output_geometry" : 
 			[
-				9,
-				9,
-				10
+				7,
+				7,
+				32
 			],
-			"type" : "dense convolution",
+			"type" : "convolution",
 			"weights_file_name" : "networks/warehouse_network/trained/layer_0"
 		},
 		{
 			"input_geometry" : 
 			[
-				9,
-				9,
-				10
+				7,
+				7,
+				32
 			],
 			"output_geometry" : 
 			[
-				9,
-				9,
-				10
+				7,
+				7,
+				32
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/warehouse_network/trained/layer_1"
@@ -57,139 +57,63 @@
 		{
 			"geometry" : 
 			[
-				3,
-				3,
-				8
+				1,
+				1,
+				64
 			],
 			"input_geometry" : 
 			[
-				9,
-				9,
-				10
+				7,
+				7,
+				32
 			],
 			"output_geometry" : 
 			[
-				9,
-				9,
-				18
+				1,
+				1,
+				64
 			],
-			"type" : "dense convolution",
+			"type" : "fc",
 			"weights_file_name" : "networks/warehouse_network/trained/layer_2"
 		},
 		{
 			"input_geometry" : 
 			[
-				9,
-				9,
-				18
+				1,
+				1,
+				64
 			],
 			"output_geometry" : 
 			[
-				9,
-				9,
-				18
+				1,
+				1,
+				64
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/warehouse_network/trained/layer_3"
 		},
 		{
-			"geometry" : 
-			[
-				3,
-				3,
-				8
-			],
 			"input_geometry" : 
 			[
-				9,
-				9,
-				18
+				1,
+				1,
+				64
 			],
 			"output_geometry" : 
 			[
-				9,
-				9,
-				26
+				1,
+				1,
+				64
 			],
-			"type" : "dense convolution",
+			"type" : "dropout",
 			"weights_file_name" : "networks/warehouse_network/trained/layer_4"
 		},
 		{
 			"input_geometry" : 
 			[
-				9,
-				9,
-				26
-			],
-			"output_geometry" : 
-			[
-				9,
-				9,
-				26
-			],
-			"type" : "relu",
-			"weights_file_name" : "networks/warehouse_network/trained/layer_5"
-		},
-		{
-			"geometry" : 
-			[
-				3,
-				3,
-				8
-			],
-			"input_geometry" : 
-			[
-				9,
-				9,
-				26
-			],
-			"output_geometry" : 
-			[
-				9,
-				9,
-				34
-			],
-			"type" : "dense convolution",
-			"weights_file_name" : "networks/warehouse_network/trained/layer_6"
-		},
-		{
-			"input_geometry" : 
-			[
-				9,
-				9,
-				34
-			],
-			"output_geometry" : 
-			[
-				9,
-				9,
-				34
-			],
-			"type" : "relu",
-			"weights_file_name" : "networks/warehouse_network/trained/layer_7"
-		},
-		{
-			"input_geometry" : 
-			[
-				9,
-				9,
-				34
-			],
-			"output_geometry" : 
-			[
-				9,
-				9,
-				34
-			],
-			"type" : "dropout",
-			"weights_file_name" : "networks/warehouse_network/trained/layer_8"
-		},
-		{
-			"input_geometry" : 
-			[
-				9,
-				9,
-				34
+				1,
+				1,
+				64
 			],
 			"output_geometry" : 
 			[
@@ -198,7 +122,7 @@
 				4
 			],
 			"type" : "output",
-			"weights_file_name" : "networks/warehouse_network/trained/layer_9"
+			"weights_file_name" : "networks/warehouse_network/trained/layer_5"
 		}
 	],
 	"network_log_file_name" : "networks/warehouse_network/network.log",

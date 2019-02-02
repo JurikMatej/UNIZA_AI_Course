@@ -33,9 +33,9 @@
 			[
 				20,
 				16,
-				8
+				9
 			],
-			"type" : "convolution",
+			"type" : "dense convolution",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_0"
 		},
 		{
@@ -43,13 +43,13 @@
 			[
 				20,
 				16,
-				8
+				9
 			],
 			"output_geometry" : 
 			[
 				20,
 				16,
-				8
+				9
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_1"
@@ -65,15 +65,15 @@
 			[
 				20,
 				16,
-				8
+				9
 			],
 			"output_geometry" : 
 			[
 				20,
 				16,
-				8
+				17
 			],
-			"type" : "convolution",
+			"type" : "dense convolution",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_2"
 		},
 		{
@@ -81,13 +81,13 @@
 			[
 				20,
 				16,
-				8
+				17
 			],
 			"output_geometry" : 
 			[
 				20,
 				16,
-				8
+				17
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_3"
@@ -97,21 +97,21 @@
 			[
 				3,
 				3,
-				16
+				8
 			],
 			"input_geometry" : 
 			[
 				20,
 				16,
-				8
+				17
 			],
 			"output_geometry" : 
 			[
 				20,
 				16,
-				16
+				25
 			],
-			"type" : "convolution",
+			"type" : "dense convolution",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_4"
 		},
 		{
@@ -119,13 +119,13 @@
 			[
 				20,
 				16,
-				16
+				25
 			],
 			"output_geometry" : 
 			[
 				20,
 				16,
-				16
+				25
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/pong_network_c/trained/layer_5"
@@ -135,13 +135,51 @@
 			[
 				3,
 				3,
+				8
+			],
+			"input_geometry" : 
+			[
+				20,
+				16,
+				25
+			],
+			"output_geometry" : 
+			[
+				20,
+				16,
+				33
+			],
+			"type" : "dense convolution",
+			"weights_file_name" : "networks/pong_network_c/trained/layer_6"
+		},
+		{
+			"input_geometry" : 
+			[
+				20,
+				16,
+				33
+			],
+			"output_geometry" : 
+			[
+				20,
+				16,
+				33
+			],
+			"type" : "relu",
+			"weights_file_name" : "networks/pong_network_c/trained/layer_7"
+		},
+		{
+			"geometry" : 
+			[
+				1,
+				1,
 				16
 			],
 			"input_geometry" : 
 			[
 				20,
 				16,
-				16
+				33
 			],
 			"output_geometry" : 
 			[
@@ -150,7 +188,7 @@
 				16
 			],
 			"type" : "convolution",
-			"weights_file_name" : "networks/pong_network_c/trained/layer_6"
+			"weights_file_name" : "networks/pong_network_c/trained/layer_8"
 		},
 		{
 			"input_geometry" : 
@@ -166,7 +204,7 @@
 				16
 			],
 			"type" : "relu",
-			"weights_file_name" : "networks/pong_network_c/trained/layer_7"
+			"weights_file_name" : "networks/pong_network_c/trained/layer_9"
 		},
 		{
 			"input_geometry" : 
@@ -182,7 +220,7 @@
 				16
 			],
 			"type" : "dropout",
-			"weights_file_name" : "networks/pong_network_c/trained/layer_8"
+			"weights_file_name" : "networks/pong_network_c/trained/layer_10"
 		},
 		{
 			"input_geometry" : 
@@ -198,7 +236,7 @@
 				2
 			],
 			"type" : "output",
-			"weights_file_name" : "networks/pong_network_c/trained/layer_9"
+			"weights_file_name" : "networks/pong_network_c/trained/layer_11"
 		}
 	],
 	"network_log_file_name" : "networks/pong_network_c/network.log",

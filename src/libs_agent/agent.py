@@ -3,9 +3,9 @@
 #this class implments basic dummy agent selecting random actions
 #into constructor just put environment (or environment interface)
 
-import libs_env.env
 import numpy
 import random
+import libs_env.env
 
 
 class Agent():

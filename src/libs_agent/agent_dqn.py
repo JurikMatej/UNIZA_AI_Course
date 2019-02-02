@@ -1,17 +1,10 @@
-import libs_agent.agent
 import numpy
-
-'''
-import sys
-sys.path.insert(0, "/home/michal/libs/deep_q_network/libs_dqn_python/")
-import dqn
-'''
-
+import libs_agent.agent
 import libs_dqn_python.dqn as dqn
 
 #deep Q network agent
 class DQNAgent(libs_agent.agent.Agent):
-    def __init__(self, env, network_config_file_name, epsilon_training = 0.2, epsilon_testing = 0.01):
+    def __init__(self, env, network_config_file_name, epsilon_training = 0.2, epsilon_testing = 0.01, epsilon_decay = 1.0):
 
         #init parent class
         libs_agent.agent.Agent.__init__(self, env)
@@ -27,6 +20,7 @@ class DQNAgent(libs_agent.agent.Agent):
         #different for training and testing
         self.epsilon_training   = epsilon_training
         self.epsilon_testing    = epsilon_testing
+        self.epsilon_decay      = epsilon_decay
 
     def main(self):
 
@@ -34,6 +28,8 @@ class DQNAgent(libs_agent.agent.Agent):
             epsilon = self.epsilon_testing
         else:
             epsilon = self.epsilon_training
+            if self.epsilon_training > self.epsilon_testing:
+                self.epsilon_training*= self.epsilon_decay
 
         state = self.env.get_observation()
         state_vector = dqn.VectorFloat(self.env.get_size())

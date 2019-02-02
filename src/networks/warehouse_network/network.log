@@ -8,20 +8,19 @@ lambda2 0.000000
 dropout 0.020000
 minibatch size 32
 
-   DENSE CONVOLUTION  [    9     9     2] [    3     3     8] [    9     9    10] [       144          8][     12312]
-                RELU  [    9     9    10] [    1     1     1] [    9     9    10] [         0          0][      1620]
-   DENSE CONVOLUTION  [    9     9    10] [    3     3     8] [    9     9    18] [       720          8][     58968]
-                RELU  [    9     9    18] [    1     1     1] [    9     9    18] [         0          0][      2916]
-   DENSE CONVOLUTION  [    9     9    18] [    3     3     8] [    9     9    26] [      1296          8][    105624]
-                RELU  [    9     9    26] [    1     1     1] [    9     9    26] [         0          0][      4212]
-   DENSE CONVOLUTION  [    9     9    26] [    3     3     8] [    9     9    34] [      1872          8][    152280]
-                RELU  [    9     9    34] [    1     1     1] [    9     9    34] [         0          0][      5508]
-             DROPOUT  [    9     9    34] [    1     1     1] [    9     9    34] [         0          0][      5508]
-                  FC  [    9     9    34] [    1     1     4] [    1     1     4] [     11016          4][     22040]
+   DENSE CONVOLUTION  [    7     7     2] [    3     3    16] [    7     7    18] [       288         16][     14896]
+                RELU  [    7     7    18] [    1     1     1] [    7     7    18] [         0          0][      1764]
+   DENSE CONVOLUTION  [    7     7    18] [    3     3    16] [    7     7    34] [      2592         16][    127792]
+                RELU  [    7     7    34] [    1     1     1] [    7     7    34] [         0          0][      3332]
+         CONVOLUTION  [    7     7    34] [    1     1    16] [    7     7    16] [       544         16][     27440]
+                RELU  [    7     7    16] [    1     1     1] [    7     7    16] [         0          0][      1568]
+                  FC  [    7     7    16] [    1     1    64] [    1     1    64] [     50176         64][    100480]
+                RELU  [    1     1    64] [    1     1     1] [    1     1    64] [         0          0][       128]
+             DROPOUT  [    1     1    64] [    1     1     1] [    1     1    64] [         0          0][       128]
+                  FC  [    1     1    64] [    1     1     4] [    1     1     4] [       256          4][       520]
 
-input_geometry  [9 9 2]
+input_geometry  [7 7 2]
 output_geometry [1 1 4]
-network flops operations 370988 FLOPS, 0.000371 GFLOPS
+network flops operations 278048 FLOPS, 0.000278 GFLOPS
 init DONE
 
-network destructor done

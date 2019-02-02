@@ -13,13 +13,13 @@ env = libs_env.env_pong.EnvPong()
 env.print_info()
 
 
-#init DQN agent
+#init DQN agent 
 #you can choose from pre-saved neteworks a, b, c
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.1, 0.01)
+agent = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_c/parameters.json", 0.2, 0.01, 0.99999)
 
 
 #process training
-training_iterations = 100000
+training_iterations = 200000
 
 for iteration in range(0, training_iterations):
     agent.main()
@@ -27,9 +27,9 @@ for iteration in range(0, training_iterations):
     if iteration%100 == 0:
         print(iteration*100.0/training_iterations, env.get_score())
 
-agent.save("networks/pong_network_b/trained/")
+agent.save("networks/pong_network_c/trained/")
 
-agent.load("networks/pong_network_b/trained/")
+agent.load("networks/pong_network_c/trained/")
 
 
 #reset score

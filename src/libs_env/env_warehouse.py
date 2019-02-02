@@ -74,8 +74,8 @@ class EnvWarehouse(libs_env.env.Env):
         libs_env.env.Env.__init__(self)
 
         self.bots_count  = 1
-        self.rewards_count     = 8
-        self.size        = 9
+        self.rewards_count     = 4
+        self.size        = 7
 
         self.actions_count  = 4*self.bots_count
 

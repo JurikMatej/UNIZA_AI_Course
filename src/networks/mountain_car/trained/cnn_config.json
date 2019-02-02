@@ -1,11 +1,11 @@
 {
 	"hyperparameters" : 
 	{
-		"dropout" : 0.20000000298023224,
+		"dropout" : 0.019999999552965164,
 		"init_weight_range" : 0,
 		"lambda1" : 1.0000000116860974e-07,
 		"lambda2" : 1.0000000116860974e-07,
-		"learning_rate" : 0.004999999888241291,
+		"learning_rate" : 0.0010000000474974513,
 		"minibatch_size" : 32
 	},
 	"input_geometry" : 
@@ -21,7 +21,7 @@
 			[
 				1,
 				1,
-				8
+				5
 			],
 			"input_geometry" : 
 			[
@@ -33,7 +33,7 @@
 			[
 				1,
 				1,
-				8
+				5
 			],
 			"type" : "fc",
 			"weights_file_name" : "networks/mountain_car/trained/layer_0"
@@ -43,13 +43,13 @@
 			[
 				1,
 				1,
-				8
+				5
 			],
 			"output_geometry" : 
 			[
 				1,
 				1,
-				8
+				5
 			],
 			"type" : "relu",
 			"weights_file_name" : "networks/mountain_car/trained/layer_1"
@@ -59,7 +59,7 @@
 			[
 				1,
 				1,
-				8
+				5
 			],
 			"output_geometry" : 
 			[

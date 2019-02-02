@@ -40,8 +40,9 @@ class EnvMountainCar(libs_env.env.Env):
 
     def reset(self):
 
-        self.position = -0.5
-        self.velocity = 0.0
+        rnd = (random.random() - 0.5)*2.0
+        self.position = -0.5 #+ 0.01*rnd
+        self.velocity = 0.0 #0.01*rnd
 
         self.__update_observation()
 
