@@ -19,22 +19,21 @@ class BlackBoxTrial:
         #init DQN agent
         self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/parameters.json", 0.4, 0.05, 0.99999)
 
-        self.training_iterations = 100000
-        self.testing_iterations = 10000
+        #iterations count
+        self.training_iterations    = 100000
+        self.testing_iterations     = 10000
 
     #process training
     def train(self):
-
+        #train bot
         for iteration in range(0, self.training_iterations):
             self.agent.main()
-            #print training progress %, ane score, every 100th iterations
 
-        if self.verbose:
-            if iteration%100 == 0:
-                print(iteration*100.0/self.training_iterations, env.get_score())
-                self.env._print()
-
-            self.env.show()
+            #print debug info
+            if self.verbose:
+                if iteration%100 == 0:
+                    print(iteration*100.0/self.training_iterations, env.get_score())
+                    self.env._print()
 
     #process testing run
     def test(self):
@@ -48,12 +47,14 @@ class BlackBoxTrial:
 
         #process testing iterations
         for iteration in range(0, self.testing_iterations):
+            #process agent
             self.agent.main()
             if (self.verbose):
                 print("move=", self.env.get_move(), " score=", self.env.get_score())
 
     def get_score(self):
         return self.env.get_score()
+
 
 def main():
     trials_count = 32
@@ -62,11 +63,14 @@ def main():
     trials_results = numpy.zeros(trials_count)
 
     for i in range(0, trials_count):
+
         trial = BlackBoxTrial()
         trial.train()
         trial.test()
+
         trials_results[i] = trial.get_score()
         print(i, trial.get_score())
+
 
     average_score = numpy.average(trials_results)
     std_score = numpy.std(trials_results)

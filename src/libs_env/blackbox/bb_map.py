@@ -1,6 +1,6 @@
 import noise
 import random
-import numpy as np
+import numpy
 
 from scipy.misc import toimage
 
@@ -26,11 +26,11 @@ class BBMap:
         else:
             seed_y = init_seed_y
 
-        self.map = np.zeros((self.width, self.height))
+        self.map = numpy.zeros((self.width, self.height))
         for y in range(self.height):
             for x in range(self.width):
                 x_ = x + seed_x
-                y_ = y + seed_y
+                y_ = y + seed_y 
                 self.map[y][x] = noise.pnoise2( x_*10.0/width,
                                                 y_*10.0/height,
                                                 octaves=octaves,
@@ -53,8 +53,8 @@ class BBMap:
         return self.map
 
     def __normalise(self):
-        max = np.max(self.map)
-        min = np.min(self.map)
+        max = numpy.max(self.map)
+        min = numpy.min(self.map)
         k = (1.0 - 0.0)/(max-min)
         q = 1.0 - k*max
         self.map = self.map*k + q

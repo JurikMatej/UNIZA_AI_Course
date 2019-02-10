@@ -14,7 +14,7 @@ class EnvBlackBox(libs_env.env.Env):
         libs_env.env.Env.__init__(self)
 
         self.map_size       = 64
-        self.features_count = 32
+        self.features_count = 8
         self.state_size     = 1
 
 
@@ -151,7 +151,12 @@ class EnvBlackBox(libs_env.env.Env):
         for f in range(0, self.features_count):
             for y in range(0, self.state_size):
                 for x in range(0, self.state_size):
-                    self.observation[idx] = self.maps[f].get()[y + self.agent_position_y][x + self.agent_position_x]
+
+                    v = self.maps[f].get()[y + self.agent_position_y][x + self.agent_position_x]
+                    noise = random.random()*0.01
+
+                    self.observation[idx] = v + noise
+
                     idx+= 1
 
 
