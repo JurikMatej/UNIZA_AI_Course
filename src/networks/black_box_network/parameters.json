@@ -12,7 +12,7 @@
         "hyperparameters" :
         {
           "init_weight_range" : 0.0,
-          "learning_rate"     : 0.001,
+          "learning_rate"     : 0.002,
           "lambda1"           : 0.000001,
           "lambda2"           : 0.000001,
           "dropout"           : 0.02,
@@ -30,14 +30,6 @@
             {
                 "type"      : "relu"
             },
-            {
-                "type"      : "fc",
-                "geometry"  : [1, 1, 32]
-            },
-            {
-                "type"      : "relu"
-            },
-
             {
                 "type"      : "dropout"
             },
