@@ -14,7 +14,7 @@ class EnvBlackBox(libs_env.env.Env):
         libs_env.env.Env.__init__(self)
 
         self.map_size       = 64
-        self.features_count = 8
+        self.features_count = 8 + random.randint(0, 24)
         self.state_size     = 1
 
 

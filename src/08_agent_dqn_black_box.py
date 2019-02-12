@@ -23,6 +23,8 @@ class BlackBoxTrial:
         self.training_iterations    = 100000
         self.testing_iterations     = 10000
 
+
+
     #process training
     def train(self):
         #train bot
@@ -55,6 +57,9 @@ class BlackBoxTrial:
     def get_score(self):
         return self.env.get_score()
 
+    def get_size(self):
+        return self.env.get_size()
+
 
 def main():
     trials_count = 32
@@ -69,7 +74,7 @@ def main():
         trial.test()
 
         trials_results[i] = trial.get_score()
-        print(i, trial.get_score())
+        print(i, trial.get_score(), trial.get_size())
 
 
     average_score = numpy.average(trials_results)
