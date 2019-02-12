@@ -1,5 +1,5 @@
 import libs_env.env
-import libs_env.blackbox.bb_map
+import libs_env.blackbox.black_box_map
 from scipy.misc import toimage
 
 import numpy
@@ -9,16 +9,24 @@ import random
 
 class EnvBlackBox(libs_env.env.Env):
 
-    def __init__(self):
+    def __init__(self, seed = 0, convolution_mode = False):
         #init parent class -> environment interface
         libs_env.env.Env.__init__(self)
 
         self.map_size       = 64
-        self.features_count = 8 + random.randint(0, 24)
-        self.state_size     = 1
+
+        prime = 60013
+
+        if convolution_mode:
+            self.features_count = 4 + (seed*prime)%8
+            self.state_size     = 8 #state planar size 8x8
+        else:
+            self.features_count = 8 + (seed*prime)%24
+            self.state_size     = 1 #state planar size 1x1
 
 
-        #dimensions
+
+        #state dimensions
         self.width  = self.state_size
         self.height = self.state_size
         self.depth  = self.features_count
@@ -38,7 +46,9 @@ class EnvBlackBox(libs_env.env.Env):
         #create feature maps
         self.maps = []
         for i in range(0, self.features_count):
-            map = libs_env.blackbox.bb_map.BBMap(self.map_size, self.map_size)
+            init_seed_x = (seed + i)*61057
+            init_seed_y = (seed + i)*62141
+            map = libs_env.blackbox.black_box_map.BlackBoxMap(self.map_size, self.map_size, init_seed_x, init_seed_y)
             self.maps.append(map)
 
         #compute reward by averaging and thresholding feature maps
@@ -47,14 +57,6 @@ class EnvBlackBox(libs_env.env.Env):
         self.fields_occupation = numpy.zeros((self.map_size, self.map_size))
 
 
-    def show(self):
-        toimage(self.rewards).show()
-        toimage(self.fields_occupation).show()
-
-        '''
-        for i in range(0, self.features_count):
-            toimage(self.maps[i].get()).show()
-        '''
     def __make_rewards(self, negative_threshold = 0.4, positive_threshold = 0.7):
         result = numpy.zeros((self.map_size, self.map_size))
 

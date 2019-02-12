@@ -4,7 +4,7 @@ import numpy
 
 from scipy.misc import toimage
 
-class BBMap:
+class BlackBoxMap:
     def __init__(self, width = 256, height = 256, init_seed_x = -1, init_seed_y = -1):
         self.width   = width
         self.height  = height
@@ -30,7 +30,7 @@ class BBMap:
         for y in range(self.height):
             for x in range(self.width):
                 x_ = x + seed_x
-                y_ = y + seed_y 
+                y_ = y + seed_y
                 self.map[y][x] = noise.pnoise2( x_*10.0/width,
                                                 y_*10.0/height,
                                                 octaves=octaves,

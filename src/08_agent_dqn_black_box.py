@@ -69,7 +69,7 @@ def main():
 
     for i in range(0, trials_count):
 
-        trial = BlackBoxTrial()
+        trial = BlackBoxTrial(i)
         trial.train()
         trial.test()
 
