@@ -4,7 +4,7 @@
 
   "network_architecture":
   {
-        "network_log_file_name" : "networks/black_box_network/network.log",
+        "network_log_file_name" : "networks/black_box_network/net_1.log",
 
         "input_geometry"     : [8, 8, 2],
         "output_geometry"    : [1, 1, 4],
@@ -26,13 +26,6 @@
             {
                 "type"      : "fc",
                 "geometry"  : [1, 1, 64]
-            },
-            {
-                "type"      : "relu"
-            },
-            {
-                "type"      : "fc",
-                "geometry"  : [1, 1, 32]
             },
             {
                 "type"      : "relu"

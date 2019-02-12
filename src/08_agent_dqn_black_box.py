@@ -7,17 +7,17 @@ import numpy
 
 class BlackBoxTrial:
 
-    def __init__(self, verbose = False):
+    def __init__(self, seed = 0, verbose = False):
 
         self.verbose = verbose
-        self.env = blackbox.EnvBlackBox()
+        self.env = blackbox.EnvBlackBox(seed)
 
         #print environment info
         if (verbose):
             self.env.print_info()
 
         #init DQN agent
-        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/parameters.json", 0.4, 0.05, 0.99999)
+        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.4, 0.05, 0.99999)
 
         #iterations count
         self.training_iterations    = 100000
@@ -34,7 +34,7 @@ class BlackBoxTrial:
             #print debug info
             if self.verbose:
                 if iteration%100 == 0:
-                    print(iteration*100.0/self.training_iterations, env.get_score())
+                    print(iteration*100.0/self.training_iterations, self.env.get_score())
                     self.env._print()
 
     #process testing run

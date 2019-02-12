@@ -98,28 +98,17 @@ class EnvBlackBox(libs_env.env.Env):
 
         self.set_no_terminal_state()
 
-        step = 1 + random.randint(0, 1)
+        if random.random() < 0.1:
+            action_id = random.randint(0, self.actions_count-1)
 
         if action_id == 0:
-            self.agent_position_x+= step
+            self.agent_position_x+= 1
         elif action_id == 1:
-            self.agent_position_x-= step
+            self.agent_position_x-= 1
         elif action_id == 2:
-            self.agent_position_y+= step
+            self.agent_position_y+= 1
         elif action_id == 3:
-            self.agent_position_y-= step
-        elif action_id == 4:
-            self.agent_position_x+= step
-            self.agent_position_y+= step
-        elif action_id == 5:
-            self.agent_position_x-= step
-            self.agent_position_y+= step
-        elif action_id == 6:
-            self.agent_position_x+= step
-            self.agent_position_y-= step
-        elif action_id == 7:
-            self.agent_position_x-= step
-            self.agent_position_y-= step
+            self.agent_position_y-= 1
 
         state_size_half = self.state_size//2
 
