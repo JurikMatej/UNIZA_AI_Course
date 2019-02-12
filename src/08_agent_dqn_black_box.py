@@ -17,7 +17,7 @@ class BlackBoxTrial:
             self.env.print_info()
 
         #init DQN agent
-        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.4, 0.05, 0.99999)
+        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.3, 0.05, 0.99999)
 
         #iterations count
         self.training_iterations    = 100000
@@ -60,6 +60,9 @@ class BlackBoxTrial:
     def get_size(self):
         return self.env.get_size()
 
+    def show(self):
+        self.env.show()
+
 
 def main():
     trials_count = 32
@@ -74,7 +77,7 @@ def main():
         trial.test()
 
         trials_results[i] = trial.get_score()
-        print(i, trial.get_score(), trial.get_size())
+        print(i, round(trial.get_score(), 3), trial.get_size())
 
 
     average_score = numpy.average(trials_results)

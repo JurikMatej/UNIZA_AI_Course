@@ -1,6 +1,6 @@
 import libs_env.env
 import libs_env.blackbox.black_box_map
-from scipy.misc import toimage
+import scipy
 
 import numpy
 import time
@@ -65,21 +65,20 @@ class EnvBlackBox(libs_env.env.Env):
 
         max = numpy.max(result)
         min = numpy.min(result)
-        k = (1.0 - 0.0)/(max-min)
+        k = (1.0 - (-1.0))/(max-min)
         q = 1.0 - k*max
         result = result*k + q
 
         for y in range(self.map_size):
             for x in range(self.map_size):
-                if result[y][x] > positive_threshold:
-                    result[y][x] = 1.0
-                elif result[y][x] < negative_threshold:
-                    result[y][x] = -1.0
-                else:
+                if not(result[y][x] > positive_threshold or result[y][x] < negative_threshold):
                     result[y][x] = 0.0
 
         return result
 
+    def show(self):
+        print("env show")
+        scipy.misc.imshow(self.rewards)
 
     def reset(self):
         self.agent_position_x = self.map_size//2
