@@ -109,6 +109,12 @@ class EnvBlackBox(libs_env.env.Env):
         elif action_id == 3:
             self.agent_position_y-= 1
 
+
+        self.agent_position_x = self.__saturate(self.agent_position_x, 0, self.map_size-1)
+        self.agent_position_y = self.__saturate(self.agent_position_y, 0, self.map_size-1)
+
+        self.reward = self.rewards[self.agent_position_y][self.agent_position_x]
+
         state_size_half = self.state_size//2
 
         respawn = False
@@ -121,12 +127,14 @@ class EnvBlackBox(libs_env.env.Env):
         if self.agent_position_y >= (self.map_size-1-state_size_half):
             respawn = True
 
+        if self.reward < 0.0:
+            respawn = True
+
         if respawn == True:
             self.agent_position_x = self.map_size//2
             self.agent_position_y = self.map_size//2
 
 
-        self.reward = self.rewards[self.agent_position_y][self.agent_position_x]
 
         self.fields_occupation[self.agent_position_y][self.agent_position_x]+= 1
 

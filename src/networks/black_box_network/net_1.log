@@ -2,7 +2,7 @@ network init start
 
 hyperparameters
 init_weight_range 0.000000 ,xavier
-learning_rate 0.000200
+learning_rate 0.000500
 lambda1 0.000001
 lambda2 0.000001
 dropout 0.020000
