@@ -5,7 +5,7 @@
 		"init_weight_range" : 0,
 		"lambda1" : 1.0000000116860974e-07,
 		"lambda2" : 1.0000000116860974e-07,
-		"learning_rate" : 0.00019999999494757503,
+		"learning_rate" : 0.00050000002374872565,
 		"minibatch_size" : 32
 	},
 	"input_geometry" : 

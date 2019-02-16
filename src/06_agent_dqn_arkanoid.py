@@ -24,13 +24,13 @@ agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_a/paramete
 
 
 #process training
-training_iterations = 200000
+training_iterations = 400000
 
 for iteration in range(0, training_iterations):
     agent.main()
     #print training progress %, ane score, every 100th iterations
     if iteration%100 == 0:
-        print(iteration*100.0/training_iterations, env.get_score())
+        print(round(iteration*100.0/training_iterations, 1), round(env.get_score(), 3))
 
 agent.save("networks/arkanoid_network_a/trained/")
 

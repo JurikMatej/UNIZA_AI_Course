@@ -156,3 +156,6 @@ class EnvMountainCar(libs_env.env.Env):
     def __update_observation(self):
         self.observation[0] = self.__map(self.position, self.position_min, self.position_max, 0.0, 1.0)
         self.observation[1] = self.__map(self.velocity, self.velocity_min, self.velocity_max, 0.0, 1.0)
+
+        for i in range(0, len(self.observation)):
+            self.observation[i]+= random.random()*0.01

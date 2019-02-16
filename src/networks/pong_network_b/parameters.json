@@ -1,6 +1,7 @@
 {
-  "experience_buffer_size"        : 1024,
-  "gamma"               : 0.98,
+  "experience_buffer_size"  : 1024,
+  "gamma"                   : 0.98,
+  "normalise"               : false,
 
   "network_architecture":
   {

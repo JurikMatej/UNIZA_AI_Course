@@ -59,8 +59,16 @@ class EnvArkanoid(libs_env.env.Env):
         self.ball_x = int(self.width/2) + random.randint(-1, 1)
         self.ball_y = int(self.height/2 + 1) + random.randint(-1, 1)
 
-        self.ball_dx = 1
-        self.ball_dy = -1
+
+        if random.randint(0, 1) == 0:
+            self.ball_dx = 1
+        else:
+            self.ball_dx = -1
+
+        if random.randint(0, 1) == 0:
+            self.ball_dy = 1
+        else:
+            self.ball_dy = -1
 
 
     def _print(self):
@@ -68,6 +76,7 @@ class EnvArkanoid(libs_env.env.Env):
         self.render()
 
     def do_action(self, action):
+
 
         if action == 0:
             self.player_position+= 1
@@ -84,7 +93,7 @@ class EnvArkanoid(libs_env.env.Env):
 
 
         if result == "brick":
-            self.reward = 0.1
+            self.reward = 0.25
 
 
         if result == "miss":
@@ -93,7 +102,7 @@ class EnvArkanoid(libs_env.env.Env):
             self.__respawn()
 
 
-        if self.__count_remaining() <= 2*3:
+        if self.__count_remaining() <= 2*4:
             self.reward = 1.0
             self.set_terminal_state()
             self.reset()
@@ -106,12 +115,11 @@ class EnvArkanoid(libs_env.env.Env):
     def __update_state(self):
         self.observation.fill(0.0)
 
-        '''
+
         for y in range(0, self.height):
             for x in range(0, self.width):
                 if self.board[y][x]!= 0:
                     self.__observation_set_dirrect(x, y, 0, 1.0)
-        '''
 
         ball_x = self.__saturate(int(self.ball_x), 0, self.width-1)
         ball_y = self.__saturate(int(self.ball_y), 0, self.height-1)
@@ -194,6 +202,10 @@ class EnvArkanoid(libs_env.env.Env):
             self.gui.paint_square(element_size)
             self.gui.pop()
 
+        self.gui.set_color(1.0, 1.0, 1.0)
+        count = "SCORE = " + str(round(self.get_score(), 3))
+        self.gui._print(-0.3, 0.95, 0.1, count)
+
         self.gui.finish()
         time.sleep(0.05)
 
@@ -211,7 +223,7 @@ class EnvArkanoid(libs_env.env.Env):
             self.board[self.ball_y][x1] = 0
             self.board[self.ball_y][x2] = 0
 
-            self.ball_dy = 1
+            self.ball_dy*= -1
             result = "brick"
 
         if self.ball_x <= 0:
@@ -225,14 +237,18 @@ class EnvArkanoid(libs_env.env.Env):
 
         if self.ball_y >= self.height-2:
             if self.player_position == self.ball_x or self.player_position-1 == self.ball_x or self.player_position+1 == self.ball_x:
-                self.ball_dy = -1
                 result = "hit"
+                self.ball_dy = -1
             else:
                 result = "miss"
 
 
         self.ball_x+= self.ball_dx
         self.ball_y+= self.ball_dy
+
+        self.ball_x = self.__saturate(self.ball_x, 0, self.width-1)
+        self.ball_y = self.__saturate(self.ball_y, 0, self.height-1)
+
 
         return result
 
@@ -258,7 +274,7 @@ class EnvArkanoid(libs_env.env.Env):
         elif item_idx == 6:
             result = [0.0, 0.0, 1.0]
         elif item_idx == 10:
-            result = [1.0, 0.0, 1.0]
+            result = [1.0, 1.0, 1.0]
         elif item_idx == 11:
             result = [1.0, 1.0, 1.0]
         return result
