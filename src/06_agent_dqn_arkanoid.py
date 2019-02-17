@@ -19,7 +19,7 @@ while True:
 
 
 #init DQN agent
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_b/parameters.json", 0.2, 0.02, 0.999999)
+agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_b/parameters.json", 0.2, 0.02, 0.99999)
 
 
 

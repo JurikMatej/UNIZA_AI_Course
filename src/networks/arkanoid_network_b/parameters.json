@@ -1,6 +1,6 @@
 {
     "experience_buffer_size"    : 1024,
-    "gamma"                     : 0.95,
+    "gamma"                     : 0.99,
     "normalise"                 : false,
 
   "network_architecture":
@@ -13,7 +13,7 @@
         "hyperparameters" :
         {
           "init_weight_range" : 0.0,
-          "learning_rate"     : 0.0002,
+          "learning_rate"     : 0.0005,
           "lambda1"           : 0.0000001,
           "lambda2"           : 0.0000001,
           "dropout"           : 0.02,
@@ -25,25 +25,20 @@
         [
             {
                 "type"      : "convolution",
+                "geometry"  : [3, 3, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+            {
+                "type"      : "convolution",
                 "geometry"  : [3, 3, 32]
             },
             {
                 "type"      : "relu"
             },
-            {
-                "type"      : "convolution",
-                "geometry"  : [3, 3, 64]
-            },
-            {
-                "type"      : "relu"
-            },
-            {
-                "type"      : "convolution",
-                "geometry"  : [3, 3, 64]
-            },
-            {
-                "type"      : "relu"
-            },
+
+
 
             {
                 "type"      : "dropout"

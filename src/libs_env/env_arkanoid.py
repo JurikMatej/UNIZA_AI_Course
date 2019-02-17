@@ -62,6 +62,9 @@ class EnvArkanoid(libs_env.env.Env):
         self.ball_x = int(self.width/2) + random.randint(-1, 1)
         self.ball_y = int(self.height/2 + 1) + random.randint(-1, 1)
 
+        self.ball_dx = 1
+        self.ball_dy = 1
+
 
         if random.randint(0, 1) == 0:
             self.ball_dx = 1
@@ -72,13 +75,14 @@ class EnvArkanoid(libs_env.env.Env):
             self.ball_dy = 1
         else:
             self.ball_dy = -1
-
+        
 
     def _print(self):
         #print("move=", self.get_move(), "  score=", self.get_score(), "  normalised score=", self.get_normalised_score())
         print("done game ", self.game_idx, " moves ", self.moves_to_win, " score ", self.get_score())
 
     def do_action(self, action):
+
         '''
         if self.player_position < self.ball_x:
             action = 0
