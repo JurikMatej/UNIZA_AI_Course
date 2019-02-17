@@ -36,6 +36,9 @@ class EnvArkanoid(libs_env.env.Env):
         self.gui = gl_gui.GLVisualisation()
         self.size_ratio = self.width/self.height
 
+        self.moves_old = 0
+        self.game_idx = 0
+        self.moves_to_win = 1000
 
 
     def reset(self):
@@ -72,14 +75,19 @@ class EnvArkanoid(libs_env.env.Env):
 
 
     def _print(self):
-        print("move=", self.get_move(), "  score=", self.get_score(), "  normalised score=", self.get_normalised_score())
-        self.render()
+        #print("move=", self.get_move(), "  score=", self.get_score(), "  normalised score=", self.get_normalised_score())
+        print("done game ", self.game_idx, " moves ", self.moves_to_win, " score ", self.get_score())
 
     def do_action(self, action):
-
-
+        '''
+        if self.player_position < self.ball_x:
+            action = 0
+        else:
+            action = 1
+        '''
         if action == 0:
             self.player_position+= 1
+
         if action == 1:
             self.player_position-= 1
 
@@ -93,19 +101,21 @@ class EnvArkanoid(libs_env.env.Env):
 
 
         if result == "brick":
-            self.reward = 0.25
-
+            self.reward = 0.5
 
         if result == "miss":
             self.reward = -1.0
             self.set_terminal_state()
             self.__respawn()
 
-
         if self.__count_remaining() <= 2*4:
             self.reward = 1.0
             self.set_terminal_state()
             self.reset()
+
+            self.moves_to_win = self.get_move() - self.moves_old
+            self.moves_old = self.get_move()
+            self.game_idx+= 1
 
 
 
@@ -119,7 +129,9 @@ class EnvArkanoid(libs_env.env.Env):
         for y in range(0, self.height):
             for x in range(0, self.width):
                 if self.board[y][x]!= 0:
-                    self.__observation_set_dirrect(x, y, 0, 1.0)
+                    self.__observation_set_dirrect(x, y, 2, 1.0)
+
+
 
         ball_x = self.__saturate(int(self.ball_x), 0, self.width-1)
         ball_y = self.__saturate(int(self.ball_y), 0, self.height-1)
@@ -127,33 +139,13 @@ class EnvArkanoid(libs_env.env.Env):
         player_x = self.__saturate(int(self.player_position), 0, self.width-1)
         player_y = self.height-1
 
-
-        self.__observation_set_dirrect(ball_x, ball_y, 1, 1.0)
-        self.__observation_set_dirrect(player_x, player_y, 2, 1.0)
+        self.__observation_set_dirrect(ball_x, ball_y, 0, 1.0)
+        self.__observation_set_dirrect(player_x, player_y, 1, 1.0)
 
         for i in range(0, len(self.observation)):
             self.observation[i]+= random.random()*0.01
 
 
-        '''
-        ball_x = self.__saturate(int(self.ball_x), 0, self.width-1)
-        ball_y = self.__saturate(int(self.ball_y), 0, self.height-1)
-
-        player_x = self.__saturate(int(self.player_position), 0, self.width-1)
-        player_y = self.height-1
-
-        for y in range(0, self.height):
-            for x in range(0, self.width):
-                if self.board[y][x]!= 0:
-                    color = self.__item_to_color(self.board[y][x])
-                    self.__observation_set(x, y, color)
-
-        color = self.__item_to_color(10)
-        self.__observation_set(ball_x, ball_y, color)
-
-        color = self.__item_to_color(11)
-        self.__observation_set(player_x, player_y, color)
-        '''
 
 
     def __observation_set(self, x, y, color):

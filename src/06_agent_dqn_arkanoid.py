@@ -19,22 +19,22 @@ while True:
 
 
 #init DQN agent
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_a/parameters.json", 0.2, 0.02, 0.999999)
+agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_b/parameters.json", 0.2, 0.02, 0.999999)
 
 
 
 #process training
-training_iterations = 400000
+training_iterations = 250000
 
 for iteration in range(0, training_iterations):
     agent.main()
     #print training progress %, ane score, every 100th iterations
     if iteration%100 == 0:
-        print(round(iteration*100.0/training_iterations, 1), round(env.get_score(), 3))
+        env._print()
 
-agent.save("networks/arkanoid_network_a/trained/")
+agent.save("networks/arkanoid_network_b/trained/")
 
-agent.load("networks/arkanoid_network_a/trained/")
+agent.load("networks/arkanoid_network_b/trained/")
 
 
 #reset score
@@ -48,7 +48,7 @@ agent.run_best_enable()
 testing_iterations = 10000
 for iteration in range(0, testing_iterations):
     agent.main()
-    print("move=", env.get_move(), " score=",env.get_score())
+    env._print()
 
 
 while True:
