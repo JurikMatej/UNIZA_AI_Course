@@ -1,7 +1,8 @@
 import numpy
 import libs_agent.agent
-import libs_dqn_python.dqn as dqn
+#import libs_dqn_python.dqn as dqn
 #import libs_dqn_python_cpu.dqn as dqn
+import libs_dqn_python_cpu_ubuntu.dqn as dqn
 
 #deep Q network agent
 class DQNAgent(libs_agent.agent.Agent):

@@ -17,7 +17,7 @@ class BlackBoxTrial:
             self.env.print_info()
 
         #init DQN agent
-        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.3, 0.05, 0.99999)
+        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_0_parameters.json", 0.3, 0.05, 0.99999)
 
         #iterations count
         self.training_iterations    = 100000
@@ -51,6 +51,10 @@ class BlackBoxTrial:
         for iteration in range(0, self.testing_iterations):
             #process agent
             self.agent.main()
+
+            if iteration%20 == 0:
+                self.env.render()
+
             if (self.verbose):
                 print("move=", self.env.get_move(), " score=", self.env.get_score())
 
@@ -65,6 +69,7 @@ class BlackBoxTrial:
 
 
 def main():
+
     trials_count = 32
     print("starting ", trials_count, " trials")
 
@@ -90,7 +95,6 @@ def main():
     print("std score = ", std_score)
     print("max score = ", max_score)
     print("min score = ", min_score)
-
 
     print("program done")
 

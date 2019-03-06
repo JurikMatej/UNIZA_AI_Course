@@ -1,5 +1,7 @@
 import libs_env.env
 import libs_env.blackbox.black_box_map
+import libs_gl_gui.gl_gui as gl_gui
+
 import scipy
 
 import numpy
@@ -56,8 +58,13 @@ class EnvBlackBox(libs_env.env.Env):
 
         self.fields_occupation = numpy.zeros((self.map_size, self.map_size))
 
+        #gui for visualisation
+        self.gui = gl_gui.GLVisualisation()
+        self.time = 0.0
 
-    def __make_rewards(self, negative_threshold = 0.4, positive_threshold = 0.7):
+
+
+    def __make_rewards(self, negative_threshold = 0.4, positive_threshold = 0.8):
         result = numpy.zeros((self.map_size, self.map_size))
 
         for i in range(0, self.features_count):
@@ -127,8 +134,8 @@ class EnvBlackBox(libs_env.env.Env):
         if self.agent_position_y >= (self.map_size-1-state_size_half):
             respawn = True
 
-        if self.reward < 0.0:
-            respawn = True
+        #if self.reward < 0.0:
+        #    respawn = True
 
         if respawn == True:
             self.agent_position_x = self.map_size//2
@@ -166,3 +173,103 @@ class EnvBlackBox(libs_env.env.Env):
             value = min
 
         return value
+
+
+    def render(self):
+        self.gui.start()
+
+        size = 2.0/self.map_size
+
+        self.gui.push()
+        self.gui.translate(-0.5, -0.5, -1.0)
+
+
+        for y in range(0, len(self.rewards)):
+            for x in range(0, len(self.rewards[y])):
+
+                self.gui.push()
+
+                x_ = self.x_to_gui_x(x)
+                y_ = self.y_to_gui_y(y)
+
+                self.gui.translate(x_, y_, 0.0)
+
+                reward = (self.rewards[y][x] + 1.0)/2.0
+                r = reward
+                g = 0.0
+                b = 1.0 - reward
+
+                self.gui.set_color(r, g, b)
+
+                self.gui.paint_square(size)
+
+                self.gui.pop()
+
+        self.gui.push()
+
+        x_ = self.x_to_gui_x(self.agent_position_x)
+        y_ = self.y_to_gui_y(self.agent_position_y)
+
+        self.gui.translate(x_, y_, 0.0)
+        self.gui.set_color(1, 1, 1)
+        self.gui.paint_square(size)
+        self.gui.pop()
+
+        self.gui.pop()
+
+
+        self.gui.push()
+
+        self.gui.translate(0.75, -0.75, 0.0)
+
+
+        for f in range(0, self.features_count):
+            cube_size = 1.0/self.features_count
+            v = self.maps[f].get()[self.agent_position_y][self.agent_position_x]
+
+            y_ = 1.0*f/self.features_count
+
+            self.gui.push()
+
+            self.gui.rotate(0, self.time*0.5, 0.0)
+            self.gui.translate(0.0, y_, 0.0)
+
+            self.gui.set_color(v, v, v)
+
+            self.gui.paint_cube(cube_size)
+            self.gui.pop()
+
+
+            score = "state"
+            self.gui.push()
+            self.gui.set_color(1.0, 1.0, 1.0)
+            self.gui._print(-0.1, 1.2, 0.0, score);
+            self.gui.pop()
+
+        self.gui.pop()
+
+
+
+
+        score = "score = " + str(round(self.get_score(), 3))
+        self.gui.push()
+        self.gui.set_color(1.0, 1.0, 1.0)
+        self.gui._print(-1.0, 1.0, 0.0, score);
+        self.gui.pop()
+
+
+        move = "move = " + str(round(self.get_move(), 3))
+        self.gui.push()
+        self.gui.set_color(1.0, 1.0, 1.0)
+        self.gui._print(-1.0, 1.1, 0.0, move);
+        self.gui.pop()
+
+        self.time+= 1.0
+
+        self.gui.finish()
+
+    def x_to_gui_x(self, x):
+        return (x*1.0/self.map_size - 0.5)*2.0
+
+    def y_to_gui_y(self, y):
+        return -(y*1.0/self.map_size - 0.5)*2.0
