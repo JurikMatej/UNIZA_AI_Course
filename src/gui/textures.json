@@ -58,6 +58,10 @@
     {
         "id"            : 12,
         "file_name"  : "gui/textures/sun.png"
+    },
+    {
+        "id"            : 13,
+        "file_name"  : "gui/textures/green_cubes.png"
     }
   ]
 }

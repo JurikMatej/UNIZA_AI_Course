@@ -1,0 +1,34 @@
+{
+    "trials count"          : 32,
+    "training iterations"   : 500000,
+    "testing iterations"    : 10000,
+
+    "verbose"               : false,
+    "render"                : true,
+
+    "seed"                  : 0,
+
+    "result file name"      : "net_2_score.txt",
+
+
+    "bots" :
+    [
+
+        {
+            "name"          : "net2a",
+            "file name" : "networks/black_box_network/net_2_parameters.json"
+        },
+        {
+            "name"          : "net2b",
+            "file name" : "networks/black_box_network/net_2_parameters.json"
+        },
+        {
+            "name"          : "net2c",
+            "file name" : "networks/black_box_network/net_2_parameters.json"
+        },
+        {
+            "name"          : "net2d",
+            "file name" : "networks/black_box_network/net_2_parameters.json"
+        }
+    ]
+}

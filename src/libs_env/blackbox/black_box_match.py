@@ -72,7 +72,9 @@ class BlackBoxMatch:
             bot_name = bots[j]["name"]
             print(bot_name, "score = ", self.results_summary[j])
 
-    def save_score(self, file_name):
+    def save_score(self):
+
+        file_name = self.json_config["result file name"]
         f = open(file_name, 'w')
 
         bots = self.json_config["bots"]

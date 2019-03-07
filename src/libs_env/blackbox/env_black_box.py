@@ -180,17 +180,19 @@ class EnvBlackBox(libs_env.env.Env):
 
         size = 2.0/self.map_size
 
-        self.gui.push()
-        self.gui.translate(-0.5, -0.5, -1.0)
 
+        self.gui.push()
+        self.gui.translate(-0.5, -0.5, 0.0)
+
+        scale = 0.7
 
         for y in range(0, len(self.rewards)):
             for x in range(0, len(self.rewards[y])):
 
                 self.gui.push()
 
-                x_ = self.x_to_gui_x(x)
-                y_ = self.y_to_gui_y(y)
+                x_ = scale*self.x_to_gui_x(x)
+                y_ = scale*self.y_to_gui_y(y)
 
                 self.gui.translate(x_, y_, 0.0)
 
@@ -207,8 +209,8 @@ class EnvBlackBox(libs_env.env.Env):
 
         self.gui.push()
 
-        x_ = self.x_to_gui_x(self.agent_position_x)
-        y_ = self.y_to_gui_y(self.agent_position_y)
+        x_ = scale*self.x_to_gui_x(self.agent_position_x)
+        y_ = scale*self.y_to_gui_y(self.agent_position_y)
 
         self.gui.translate(x_, y_, 0.0)
         self.gui.set_color(1, 1, 1)
@@ -248,21 +250,25 @@ class EnvBlackBox(libs_env.env.Env):
 
         self.gui.pop()
 
-
-
-
         score = "score = " + str(round(self.get_score(), 3))
         self.gui.push()
         self.gui.set_color(1.0, 1.0, 1.0)
         self.gui._print(-1.0, 1.0, 0.0, score);
         self.gui.pop()
 
-
         move = "move = " + str(round(self.get_move(), 3))
         self.gui.push()
         self.gui.set_color(1.0, 1.0, 1.0)
         self.gui._print(-1.0, 1.1, 0.0, move);
         self.gui.pop()
+
+        '''
+        self.gui.push()
+        self.gui.set_color(1, 1, 1)
+        self.gui.translate(0.0, 0.0, -0.01)
+        self.gui.paint_textured_rectangle(3, 3, 13)
+        self.gui.pop()
+        '''
 
         self.time+= 1.0
 
