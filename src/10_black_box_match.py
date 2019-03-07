@@ -1,0 +1,10 @@
+import libs_env.blackbox.black_box_match
+
+
+
+match = libs_env.blackbox.black_box_match.BlackBoxMatch("black_box_match.json")
+
+
+match.run()
+match.print_score()
+match.save_score("score.txt")

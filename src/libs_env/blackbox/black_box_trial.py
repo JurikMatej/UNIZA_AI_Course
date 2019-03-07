@@ -1,5 +1,3 @@
-#this is blackbox challenge test
-
 import libs_env.blackbox.env_black_box as blackbox
 import libs_agent.agent_dqn
 import numpy
@@ -7,21 +5,23 @@ import numpy
 
 class BlackBoxTrial:
 
-    def __init__(self, seed = 0, verbose = False):
+    def __init__(self, bot_file_name, training_iterations, testing_iterations, seed = 0, verbose = False, render = False):
 
         self.verbose = verbose
+        self.render = render
         self.env = blackbox.EnvBlackBox(seed)
 
         #print environment info
         if (verbose):
             self.env.print_info()
+            print("loading agent ", bot_file_name)
 
         #init DQN agent
-        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.3, 0.05, 0.99999)
+        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, bot_file_name, 0.3, 0.05, 0.99999)
 
         #iterations count
-        self.training_iterations    = 100000
-        self.testing_iterations     = 10000
+        self.training_iterations    = training_iterations
+        self.testing_iterations     = testing_iterations
 
 
 
@@ -33,7 +33,7 @@ class BlackBoxTrial:
 
             #print debug info
             if self.verbose:
-                if iteration%100 == 0:
+                if iteration%1000 == 0:
                     print(iteration*100.0/self.training_iterations, self.env.get_score())
                     self.env._print()
 
@@ -52,11 +52,12 @@ class BlackBoxTrial:
             #process agent
             self.agent.main()
 
-            if iteration%20 == 0:
-                self.env.render()
-
-            if (self.verbose):
+            if self.verbose:
                 print("move=", self.env.get_move(), " score=", self.env.get_score())
+
+            if self.render:
+                if iteration%20 == 0:
+                    self.env.render()
 
     def get_score(self):
         return self.env.get_score()
@@ -66,39 +67,3 @@ class BlackBoxTrial:
 
     def show(self):
         self.env.show()
-
-
-def main():
-
-    trials_count = 32
-    print("starting ", trials_count, " trials")
-
-    trials_results = numpy.zeros(trials_count)
-
-    for i in range(0, trials_count):
-
-        trial = BlackBoxTrial(i)
-        trial.train()
-        trial.test()
-
-        trials_results[i] = trial.get_score()
-        print(i, round(trial.get_score(), 3), trial.get_size())
-
-
-    average_score = numpy.average(trials_results)
-    std_score = numpy.std(trials_results)
-    max_score = numpy.max(trials_results)
-    min_score = numpy.min(trials_results)
-
-    print()
-    print("average score = ", average_score)
-    print("std score = ", std_score)
-    print("max score = ", max_score)
-    print("min score = ", min_score)
-
-    print("program done")
-
-
-
-if __name__== "__main__":
-    main()
