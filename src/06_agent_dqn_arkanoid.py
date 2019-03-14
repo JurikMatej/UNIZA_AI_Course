@@ -1,15 +1,15 @@
-import libs_env.env_arkanoid
-import libs_agent.agent_dqn
-import libs_agent.agent
+import libs.libs_env.env_arkanoid
+import libs.libs_agent.agent_dqn
+import libs.libs_agent.agent
 
 #init cliff environment
-env = libs_env.env_arkanoid.EnvArkanoid()
+env = libs.libs_env.env_arkanoid.EnvArkanoid()
 
 #print environment info
 env.print_info()
 
 '''
-agent = libs_agent.agent.Agent(env)
+agent = libs.libs_agent.agent.Agent(env)
 while True:
     agent.main()
 
@@ -19,8 +19,7 @@ while True:
 
 
 #init DQN agent
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_b/parameters.json", 0.2, 0.02, 0.99999)
-
+agent = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/arkanoid_network_b/parameters.json", 0.2, 0.02, 0.99999)
 
 
 #process training
@@ -33,6 +32,7 @@ for iteration in range(0, training_iterations):
         env._print()
 
 agent.save("networks/arkanoid_network_b/trained/")
+
 
 agent.load("networks/arkanoid_network_b/trained/")
 

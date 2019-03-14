@@ -1,0 +1,30 @@
+{
+    "trials count"          : 32,
+    "training iterations"   : 500000,
+    "testing iterations"    : 10000,
+
+    "verbose"               : false,
+    "render"                : true,
+
+    "seed"                  : 0,
+
+    "result file name"      : "black_box_match_score.txt",
+
+
+    "bots" :
+    [
+
+        {
+            "name"          : "net0",
+            "file name" : "networks/black_box_network/net_0_parameters.json"
+        },
+        {
+            "name"          : "net1",
+            "file name" : "networks/black_box_network/net_1_parameters.json"
+        },
+        {
+            "name"          : "net2",
+            "file name" : "networks/black_box_network/net_2_parameters.json"
+        }
+    ]
+}

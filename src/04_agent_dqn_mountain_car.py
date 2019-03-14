@@ -6,11 +6,11 @@
 #mountain car problem is long episodic problem
 #eperience buffer should be huge (4096) and gamma = 1
 
-import libs_env.env_mountain_car
-import libs_agent.agent_dqn
+import libs.libs_env.env_mountain_car
+import libs.libs_agent.agent_dqn
 
 #init cliff environment
-env = libs_env.env_mountain_car.EnvMountainCar()
+env = libs.libs_env.env_mountain_car.EnvMountainCar()
 
 #print environment info
 env.print_info()
@@ -18,7 +18,7 @@ env.print_info()
 
 #init DQN agent
 
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/mountain_car/parameters.json", 0.1, 0.02)
+agent = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/mountain_car/parameters.json", 0.1, 0.02)
 
 
 #process training

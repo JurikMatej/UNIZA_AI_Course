@@ -3,11 +3,11 @@
 #reward is -1 when miss, and +1 when hit the ball
 #example for convolutional and deep neural network use
 
-import libs_env.env_pong
-import libs_agent.agent_dqn
+import libs.libs_env.env_pong
+import libs.libs_agent.agent_dqn
 
 #init cliff environment
-env = libs_env.env_pong.EnvPong()
+env = libs.libs_env.env_pong.EnvPong()
 
 #print environment info
 env.print_info()
@@ -15,7 +15,7 @@ env.print_info()
 
 #init DQN agent
 #you can choose from pre-saved neteworks a, b, c
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_c/parameters.json", 0.2, 0.01, 0.99999)
+agent = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_a/parameters.json", 0.2, 0.01, 0.99999)
 
 
 #process training
@@ -27,9 +27,9 @@ for iteration in range(0, training_iterations):
     if iteration%100 == 0:
         print(iteration*100.0/training_iterations, env.get_score())
 
-agent.save("networks/pong_network_c/trained/")
+agent.save("networks/pong_network_a/trained/")
 
-agent.load("networks/pong_network_c/trained/")
+agent.load("networks/pong_network_a/trained/")
 
 
 #reset score

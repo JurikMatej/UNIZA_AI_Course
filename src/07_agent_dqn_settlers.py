@@ -1,9 +1,9 @@
-import libs_env.env_settlers
-import libs_agent.agent_dqn
-import libs_agent.agent
+import libs.libs_env.env_settlers
+import libs.libs_agent.agent_dqn
+import libs.libs_agent.agent
 
 #init cliff environment
-env = libs_env.env_settlers.EnvSettlers()
+env = libs.libs_env.env_settlers.EnvSettlers()
 
 #print environment info
 env.print_info()
@@ -11,8 +11,9 @@ env.print_info()
 
 
 #init DQN agent
-agent = libs_agent.agent_dqn.DQNAgent(env, "networks/settlers_network/parameters.json", 0.2, 0.1) #0.2, 0.1
+agent = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/settlers_network/parameters.json", 0.2, 0.1) #0.2, 0.1
 #agent = libs_agent.agent.Agent(env)
+
 
 #process training
 training_iterations = 500000
@@ -25,6 +26,7 @@ for iteration in range(0, training_iterations):
         print(iteration*100.0/training_iterations, env.get_score())
 
 agent.save("networks/settlers_network/trained/")
+
 
 agent.load("networks/settlers_network/trained/")
 

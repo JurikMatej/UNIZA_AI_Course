@@ -1,6 +1,6 @@
 import random
 import numpy
-import libs_env.env
+import libs.libs_env.env
 
 
 class Agent():

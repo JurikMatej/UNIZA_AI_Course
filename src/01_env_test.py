@@ -1,17 +1,17 @@
 #this is basic environment test
 #create example environment and agent playing random strategy
 
-import libs_env.env_cliff
-import libs_agent.agent
+import libs.libs_env.env_cliff
+import libs.libs_agent.agent
 
 #init cliff environment
-env = libs_env.env_cliff.EnvCliff()
+env = libs.libs_env.env_cliff.EnvCliff()
 
 #print environment info
 env.print_info()
 
 #init dummy agent - doing only random actions
-agent = libs_agent.agent.Agent(env)
+agent = libs.libs_agent.agent.Agent(env)
 
 #simulate training -> random moves only
 training_iterations = 10000

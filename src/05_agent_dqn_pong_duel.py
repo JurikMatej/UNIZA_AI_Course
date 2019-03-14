@@ -1,11 +1,11 @@
 #pong game duel
 #playing two networks against each other
 
-import libs_env.env_pong_duel
-import libs_agent.agent_dqn
+import libs.libs_env.env_pong_duel
+import libs.libs_agent.agent_dqn
 
 #init cliff environment
-env = libs_env.env_pong_duel.EnvPongDuel()
+env = libs.libs_env.env_pong_duel.EnvPongDuel()
 
 #print environment info
 env.print_info()
@@ -13,8 +13,8 @@ env.print_info()
 
 #init DQN agent
 #you can choose from pre-saved neteworks a, b, c
-agent_0 = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.2, 0.01, 0.99999)
-agent_1 = libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.2, 0.01, 0.99999)
+agent_0 = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.2, 0.01, 0.99999)
+agent_1 = libs.libs_agent.agent_dqn.DQNAgent(env, "networks/pong_network_b/parameters.json", 0.2, 0.01, 0.99999)
 
 agent_0.load("networks/pong_network_b/trained/")
 agent_1.load("networks/pong_network_b/trained/")

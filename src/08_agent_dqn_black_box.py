@@ -1,7 +1,7 @@
 #this is blackbox challenge test
 
-import libs_env.blackbox.env_black_box as blackbox
-import libs_agent.agent_dqn
+import libs.libs_env.blackbox.env_black_box as blackbox
+import libs.libs_agent.agent_dqn as dqn
 import numpy
 
 
@@ -17,7 +17,7 @@ class BlackBoxTrial:
             self.env.print_info()
 
         #init DQN agent
-        self.agent = libs_agent.agent_dqn.DQNAgent(self.env, "networks/black_box_network/net_1_parameters.json", 0.3, 0.05, 0.99999)
+        self.agent = dqn.DQNAgent(self.env, "networks/black_box_network/net_0_parameters.json", 0.3, 0.05, 0.99999)
 
         #iterations count
         self.training_iterations    = 100000
@@ -77,7 +77,7 @@ def main():
 
     for i in range(0, trials_count):
 
-        trial = BlackBoxTrial(i)
+        trial = BlackBoxTrial(i, True)
         trial.train()
         trial.test()
 
