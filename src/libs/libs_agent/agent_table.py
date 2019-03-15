@@ -1,18 +1,25 @@
-#Q-learning and SARSA agents coded from scratch
-#table is used to store Q values
-#state vector is converted to table index into table as idx = argmax(state)
+"""
+ Q-learning and SARSA agents coded from scratch
+ table is used to store Q values
+ state vector is converted to table index into table as idx = argmax(state)
 
-#parameters
-#gamma - RL discount factor
-#alpha - learning rate
-#epsilon_training - probability of choosing random action during training
-#epsilon_testing  - probability of choosing random action during testing
+ parameters
+ gamma - RL discount factor
+ alpha - learning rate
+ epsilon_training - probability of choosing random action during training
+ epsilon_testing  - probability of choosing random action during testing
+"""
 
 import libs.libs_agent.agent as libs_agent
 import numpy
 
 #basic Q learning reinforcement learning algorithm
 class QLearningAgent(libs_agent.Agent):
+
+
+    """!@brief initialise agent
+        @param env - environment instance where agent exists
+    """
     def __init__(self, env):
 
         #init parent class
@@ -43,8 +50,15 @@ class QLearningAgent(libs_agent.Agent):
         #init Q table, using number of states and actions
         self.q_table = numpy.zeros((self.states_count, self.actions_count))
 
+    """!@brief learning method
+        call this in loop, as many iterations as you need
 
-
+        - this method looks at the observation (env.get_observation())
+        - select action, using q_table
+        - execute action env.do_action(action)
+        - obtain reward env.get_reward()
+        - learn from exepriences - fill q_table
+    """
     def main(self):
 
         #choose epsilon - depends on training or testing mode
@@ -82,6 +96,10 @@ class QLearningAgent(libs_agent.Agent):
 
 #basic SARSA reinforcement learning algorithm
 class SarsaAgent(libs_agent.Agent):
+
+    """!@brief initialise agent
+        @param env - environment instance where agent exists
+    """
     def __init__(self, env):
 
         #init parent class
@@ -113,7 +131,15 @@ class SarsaAgent(libs_agent.Agent):
         self.q_table = numpy.zeros((self.states_count, self.actions_count))
 
 
+    """!@brief learning method
+        call this in loop, as many iterations as you need
 
+        - this method looks at the observation (env.get_observation())
+        - select action, using q_table
+        - execute action env.do_action(action)
+        - obtain reward env.get_reward()
+        - learn from exepriences - fill q_table
+    """
     def main(self):
 
         #choose epsilon - depends on training or testing mode

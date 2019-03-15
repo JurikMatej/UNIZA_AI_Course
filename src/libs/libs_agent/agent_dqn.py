@@ -1,3 +1,14 @@
+"""
+ deep Q network (DQN) reinforcement learning agent
+ agent is using deep neural network and experience replay to learn Q(s, a) values
+
+ parameters
+ network_config_file_name - DQN neural network architecture
+ epsilon_training - probability of choosing random action during training
+ epsilon_testing  - probability of choosing random action during testing
+ epsilon_decay - dacay of epsilon during training
+"""
+
 import numpy
 import libs.libs_agent.agent as libs_agent
 
@@ -22,6 +33,7 @@ class DQNAgent(libs_agent.Agent):
         state_geometry.h = self.env.get_height()
         state_geometry.d = self.env.get_depth()
 
+        #this is true magic of deep RL, deep Q network
         self.deep_q_network = libs_dqn.DQN(network_config_file_name, state_geometry, self.env.get_actions_count())
 
         #init probabilities of choosing random action
@@ -32,6 +44,7 @@ class DQNAgent(libs_agent.Agent):
 
     def main(self):
 
+        #choose correct epsilon - check if testing or training mode
         if self.is_run_best_enabled():
             epsilon = self.epsilon_testing
         else:
@@ -39,30 +52,45 @@ class DQNAgent(libs_agent.Agent):
             if self.epsilon_training > self.epsilon_testing:
                 self.epsilon_training*= self.epsilon_decay
 
+        #obtain state
         state = self.env.get_observation()
         state_vector = libs_dqn.VectorFloat(self.env.get_size())
         for i in range(0, state_vector.size()):
             state_vector[i] = state[i]
 
+        #obtain Q values using neural network
         self.deep_q_network.compute_q_values(state_vector)
         q_values = self.deep_q_network.get_q_values()
 
+        #select action using q_values from NN and epsilon
         self.action = self.select_action(q_values, epsilon)
 
+        #execute action
         self.env.do_action(self.action)
 
+        #obtain reward
         self.reward = self.env.get_reward()
 
+        #add state, q_values and reward into experience replay
+
+        #if it is terminal state (game end) add it by calling add_final()
         if self.env.is_done():
             self.deep_q_network.add_final(state_vector, q_values, self.action, self.reward)
+        #otherwise add as common state
         else:
             self.deep_q_network.add(state_vector, q_values, self.action, self.reward)
 
+        #if experience replay is full process training - but only when agent in training mode
         if self.deep_q_network.is_full() and self.is_run_best_enabled() == False:
             self.deep_q_network.learn()
-
+    """
+        save agent neural network into specified dir
+    """
     def save(self, file_name_prefix):
         self.deep_q_network.save(file_name_prefix)
 
+    """
+        load agent neural network from specified file
+    """
     def load(self, file_name):
         self.deep_q_network.load_weights(file_name)
