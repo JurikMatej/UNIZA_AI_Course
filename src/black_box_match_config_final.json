@@ -1,0 +1,29 @@
+{
+    "trials count"          : 32,
+    "training iterations"   : 500000,
+    "testing iterations"    : 10000,
+
+    "verbose"               : false,
+    "render"                : true,
+
+    "seed"                  : 513,
+
+    "result file name"      : "bots/black_box_match_score_final.txt",
+
+
+    "bots" :
+    [
+        {
+            "name"          : "stiepici",
+            "file name" : "bots/stiepici.json"
+        },
+        {
+            "name"          : "ciernasmrt",
+            "file name" : "bots/ciernasmrt.json"
+        },
+        {
+            "name"          : "vychodnare",
+            "file name" : "bots/vychodnare.json"
+        }
+    ]
+}

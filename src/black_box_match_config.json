@@ -4,27 +4,42 @@
     "testing iterations"    : 10000,
 
     "verbose"               : false,
-    "render"                : true,
+    "render"                : false,
 
-    "seed"                  : 0,
+    "seed"                  : 315,
 
-    "result file name"      : "black_box_match_score.txt",
+    "result file name"      : "bots/black_box_match_score.txt",
 
 
     "bots" :
     [
-
         {
-            "name"          : "net0",
-            "file name" : "networks/black_box_network/net_0_parameters.json"
+            "name"          : "stiepici",
+            "file name" : "bots/stiepici.json"
         },
         {
-            "name"          : "net1",
-            "file name" : "networks/black_box_network/net_1_parameters.json"
+            "name"          : "ciernasmrt",
+            "file name" : "bots/ciernasmrt.json"
         },
         {
-            "name"          : "net2",
-            "file name" : "networks/black_box_network/net_2_parameters.json"
+            "name"          : "agentssmiths",
+            "file name" : "bots/agentssmiths.json"
+        },
+        {
+            "name"          : "komin_sparta",
+            "file name" : "bots/komin_sparta.json"
+        },
+        {
+            "name"          : "drevorubaci",
+            "file name" : "bots/drevorubaci.json"
+        },
+        {
+            "name"          : "vychodnare",
+            "file name" : "bots/vychodnare.json"
+        },
+        {
+            "name"          : "spectators",
+            "file name" : "bots/spectators.json"
         }
     ]
 }

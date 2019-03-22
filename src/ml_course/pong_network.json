@@ -25,8 +25,32 @@
         [
 
             {
-                "type"      : "fc",
-                "geometry"  : [1, 1, 64]
+                "type"      : "dense fc",
+                "geometry"  : [1, 1, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+
+            {
+                "type"      : "dense fc",
+                "geometry"  : [1, 1, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+
+            {
+                "type"      : "dense fc",
+                "geometry"  : [1, 1, 16]
+            },
+            {
+                "type"      : "relu"
+            },
+
+            {
+                "type"      : "dense fc",
+                "geometry"  : [1, 1, 16]
             },
             {
                 "type"      : "relu"

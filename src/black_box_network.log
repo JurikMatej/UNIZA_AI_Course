@@ -1,0 +1,19 @@
+network init start
+
+hyperparameters
+init_weight_range 0.000000 ,xavier
+learning_rate 0.010000
+lambda1 0.000001
+lambda2 0.000001
+dropout 0.000000
+minibatch size 32
+
+                  FC  [    1     1    29] [    1     1    16] [    1     1    16] [       464         16][       960]
+                  FC  [    1     1    16] [    1     1     4] [    1     1     4] [        64          4][       136]
+
+input_geometry  [1 1 29]
+output_geometry [1 1 4]
+network flops operations 1096 FLOPS, 0.000001 GFLOPS
+init DONE
+
+network destructor done
