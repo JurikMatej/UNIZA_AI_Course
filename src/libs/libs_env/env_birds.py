@@ -39,12 +39,22 @@ class EnvBirds(env.Env):
 
     def do_action(self, action):
 
+        '''
         if action == 0:
             acc = 0.01
         else:
             acc = -0.01
 
         self.s+= acc
+        '''
+
+        if action == 0:
+            f = 0.02 - 0.01
+        else:
+            f = 0.0  - 0.01
+
+        self.v+= f
+        self.s+= self.v*0.01
 
         if self.v > 1.0:
             self.v = 1.0
