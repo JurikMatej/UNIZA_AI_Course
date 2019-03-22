@@ -1,6 +1,6 @@
 {
   "experience_buffer_size"        : 256,
-  "gamma"                         : 0.98,
+  "gamma"                         : 0.9,
   "normalise"                     : false,
 
   "network_architecture":
@@ -13,7 +13,7 @@
         "hyperparameters" :
         {
           "init_weight_range" : 0.0,
-          "learning_rate"     : 0.002,
+          "learning_rate"     : 0.005,
           "lambda1"           : 0.000001,
           "lambda2"           : 0.000001,
           "dropout"           : 0.2,
@@ -25,7 +25,7 @@
         [
             {
                 "type"      : "fc",
-                "geometry"  : [1, 1, 16]
+                "geometry"  : [1, 1, 32]
             },
             {
                 "type"      : "relu"

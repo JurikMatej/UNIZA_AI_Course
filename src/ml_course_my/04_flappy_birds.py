@@ -13,7 +13,7 @@ env.print_info()
 agent = agent_dqn.DQNAgent(env, "flappy_bird_net.json")
 
 
-training_iterations = 100000
+training_iterations = 500000
 
 for i in range(0, training_iterations):
     agent.main()

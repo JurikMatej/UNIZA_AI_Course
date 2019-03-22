@@ -13,7 +13,7 @@ class EnvBirds(env.Env):
 
         self.width  = 1
         self.height = 1
-        self.depth  = 4
+        self.depth  = 2
 
         self.actions_count = 2
 
@@ -78,9 +78,7 @@ class EnvBirds(env.Env):
             self.new_hole()
 
         self.observation[0] = self.s
-        self.observation[1] = self.v
-        self.observation[2] = self.hole_y
-        self.observation[3] = self.hole_x
+        self.observation[1] = self.hole_y
 
 
         self.next_move()
@@ -97,9 +95,8 @@ class EnvBirds(env.Env):
         y_top = (1.0 + (self.hole_y + self.hole_height*0.5))/2.0
         height_top = 2.0*(1.0 - (self.hole_y + self.hole_height*0.5))
 
-
-        height_bottom = 2.0*(self.hole_y - self.hole_height*0.5)
         y_bottom = (self.hole_y - self.hole_height*0.5)/2.0
+        height_bottom = 2.0*(self.hole_y - self.hole_height*0.5)
 
         y_top    = self.y_to_gui_y(y_top)
         y_bottom = self.y_to_gui_y(y_bottom)
